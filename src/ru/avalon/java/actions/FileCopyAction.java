@@ -12,15 +12,15 @@ import java.nio.file.*;
 public class FileCopyAction implements Action {
     String source;
     String target;
+    Thread thread;
 
-    FileCopyAction(String source, String target) {
+    public FileCopyAction(String source, String target) {
         this.source = source;
         this.target = target;
-        t = new Thread(this,"copy");
-        t.start();
+        thread = new Thread(this,"copy");
+        thread.start();
     }
 
-    Thread t;
     @Override
     public void run() {
         /*
@@ -34,11 +34,6 @@ public class FileCopyAction implements Action {
         } catch (IOException e) {
             System.out.println("Ошибка ввода-вывода " + e);
         }
-        try {
-            this.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
@@ -50,7 +45,10 @@ public class FileCopyAction implements Action {
         /*
          * TODO №3 Реализуйте метод close класса FileCopyAction
          */
-        System.out.println("Всё получилось");
-        //throw new UnsupportedOperationException("Not implemented yet!");
+        System.out.println("Копирование завершено, для завершения программы введите 'exit'");
+    }
+
+    public Thread getThread() {
+        return thread;
     }
 }
