@@ -43,6 +43,7 @@ public class Lab3 extends ConsoleUI<Commands> {
     protected void onCommand(Commands command) throws IOException {
         String source;
         String target;
+        String[] nameFile;
         BufferedReader br;
 
         switch (command) {
@@ -79,7 +80,7 @@ public class Lab3 extends ConsoleUI<Commands> {
 
                 System.out.print("Откуда перемещаем: ");
                 source = br.readLine();
-                String[] nameFile = source.split("\\\\");
+                nameFile = source.split("\\\\");
                 System.out.println(source);
                 System.out.print("Куда перемещаем: ");
                 target = br.readLine();
@@ -95,6 +96,43 @@ public class Lab3 extends ConsoleUI<Commands> {
                 }
 
                 break;
+            case delete:
+
+                br = new BufferedReader(new
+                        InputStreamReader(System.in));
+
+                System.out.print("Откуда удаляем файл: ");
+                target = br.readLine();
+                FileDeleteAction fileDelete = new FileDeleteAction(target);
+
+                if(fileDelete.getThread().isAlive()) {
+                    try {
+                        fileDelete.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+
+            case create:
+                br = new BufferedReader(new
+                        InputStreamReader(System.in));
+
+                System.out.print("Где создаем файл: ");
+                target = br.readLine();
+                System.out.println(target);
+                FileCreateAction fileCreate = new FileCreateAction(target);
+
+                if(fileCreate.getThread().isAlive()) {
+                    try {
+                        fileCreate.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+
             case exit:
                 close();
                 break;
